@@ -1,0 +1,12 @@
+[project]
+name = "Line-Art-Studio"
+version = "1.0.0"
+description = "Print a photo as one unbroken line of constant width that never crosses itself."
+requires-python = ">=3.12"
+readme = "docs/PLUGIN.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+dependencies = []
+
+[tool.orcaslicer]
+package = "line_art_studio"
