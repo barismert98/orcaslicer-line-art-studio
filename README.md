@@ -4,7 +4,7 @@
 
 ![A real print of one unbroken line](docs/images/print.png)
 
-*A real print, made with version 0.3.0 on a Bambu Lab X1 Carbon: 150 mm square, one line.*
+*A real print on a Bambu Lab X1 Carbon: 150 mm square, one line.*
 
 Also on [Orca Cloud](https://cloud.orcaslicer.com/app/plugins/shared-plugins/3f3d02f5-8199-414c-9eaf-1f075a954aa6).
 
