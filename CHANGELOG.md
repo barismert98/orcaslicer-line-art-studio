@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.0.0
+- 2026-11-10: Published: Orca Cloud listing `3f3d02f5-8199-414c-9eaf-1f075a954aa6` and GitHub `barismert98/orcaslicer-line-art-studio`, release v1.0.0.
 - 2026-11-10: First public version. Same behavior as 0.4.0.
 
 ## 0.4.0 (not published)
