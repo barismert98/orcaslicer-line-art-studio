@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Line Art Studio Guide</title>
+<meta name="description" content="How to install and use Line Art Studio 1.0.0 for OrcaSlicer: turn a picture into one unbroken printed line.">
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #1f2427;
+  --muted: #5b6468;
+  --surface: #f4f6f6;
+  --border: #dde3e3;
+  --accent: #00796b;
+  --accent-soft: #e0f2ef;
+  --warn-soft: #fff3e0;
+  --warn: #9a4f00;
+  --code-bg: #eef1f1;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .12);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1f21;
+    --fg: #e8ecec;
+    --muted: #a3adb0;
+    --surface: #25292b;
+    --border: #3a4144;
+    --accent: #4db6ac;
+    --accent-soft: #1e3532;
+    --warn-soft: #3a2c1a;
+    --warn: #f0b46a;
+    --code-bg: #2c3133;
+    --shadow: 0 1px 3px rgba(0, 0, 0, .5);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1f21;
+  --fg: #e8ecec;
+  --muted: #a3adb0;
+  --surface: #25292b;
+  --border: #3a4144;
+  --accent: #4db6ac;
+  --accent-soft: #1e3532;
+  --warn-soft: #3a2c1a;
+  --warn: #f0b46a;
+  --code-bg: #2c3133;
+  --shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+header.top { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 8px; }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 8px; }
+h2 { font-size: 1.45rem; margin: 48px 0 12px; padding-top: 8px; border-top: 1px solid var(--border); }
+h3 { font-size: 1.1rem; margin: 28px 0 8px; }
+p, li { max-width: 72ch; }
+a { color: var(--accent); }
+.lead { color: var(--muted); font-size: 1.08rem; margin: 0; }
+.version { display: inline-block; font-size: .85rem; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 2px 10px; margin-bottom: 12px; }
+nav.toc { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin: 24px 0; }
+nav.toc ol { margin: 0; padding-left: 20px; }
+nav.toc li { margin: 2px 0; }
+ol.steps { padding-left: 0; list-style: none; counter-reset: step; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin: 0 0 28px; max-width: none; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; font-size: .95rem;
+}
+ol.steps > li > strong:first-child { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+figure { margin: 16px 0 8px; }
+figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; box-shadow: var(--shadow); background: #fff; }
+figure.narrow img { max-width: 400px; width: 100%; }
+figcaption { font-size: .9rem; color: var(--muted); margin-top: 6px; }
+.source { display: inline-block; font-size: .75rem; font-weight: 600; letter-spacing: .02em; border-radius: 4px; padding: 1px 6px; margin-right: 6px; vertical-align: 1px; }
+.source.real { background: var(--accent-soft); color: var(--accent); }
+.ui { font-weight: 600; }
+code, .msg { font-family: Consolas, "Cascadia Mono", Menlo, monospace; font-size: .88em; background: var(--code-bg); border-radius: 4px; padding: 1px 5px; }
+.msg { display: block; padding: 8px 10px; margin: 6px 0; white-space: normal; overflow-wrap: anywhere; }
+.note { background: var(--accent-soft); border-left: 4px solid var(--accent); border-radius: 0 6px 6px 0; padding: 10px 14px; margin: 16px 0; }
+.note p { margin: 0; }
+.table-wrap { overflow-x: auto; margin: 12px 0; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: .95rem; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+th { color: var(--muted); font-weight: 600; background: var(--surface); }
+td:first-child { white-space: nowrap; font-weight: 600; }
+dl.trouble dt { font-weight: 600; margin-top: 22px; }
+dl.trouble dd { margin: 6px 0 0; }
+footer { margin-top: 56px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
+@media (max-width: 560px) {
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.25rem; }
+  ol.steps > li { padding-left: 38px; }
+  td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <span class="version">Version 1.0.0 · OrcaSlicer 2.5</span>
+  <h1>Line Art Studio: how-to guide</h1>
+  <p class="lead">Line Art Studio turns a picture into one unbroken line that never crosses itself, printed on top of a thin base. The line keeps one width all the way; dark parts of the picture appear where the line winds more tightly.</p>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#install">Install, subscribe and activate</a></li>
+    <li><a href="#tab">Where the tab is</a></li>
+    <li><a href="#first-use">Your first line art, step by step</a></li>
+    <li><a href="#settings">The key settings</a></li>
+    <li><a href="#printing">Printing tips for an X1 Carbon with AMS</a></li>
+    <li><a href="#trouble">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<div class="note"><p>Every picture in this guide, marked <span class="source real">OrcaSlicer 2.5.2</span>, is a capture of a real OrcaSlicer 2.5.2 window running Line Art Studio 1.0.0.</p></div>
+
+<h2 id="install">1. Install, subscribe and activate</h2>
+<p>Line Art Studio is published on Orca Cloud, OrcaSlicer's plugin catalog. It needs OrcaSlicer 2.5.0 or later.</p>
+<ol class="steps">
+  <li><strong>Open the Plugins dialog.</strong>In OrcaSlicer, open the main menu (the <span class="ui">&#9776;</span> button next to <span class="ui">File</span>, at the top left) and choose <span class="ui">Plugins</span>.
+    <figure class="narrow">
+      <img src="orca-menu-plugins.png" width="211" height="210" loading="lazy" alt="OrcaSlicer's main menu: Edit, View, Preferences, Open Speed Dial, Preset Bundle, Sync Presets, Plugins (highlighted) and Help.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The main menu. <span class="ui">Plugins</span> opens the Plugins dialog.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Find Line Art Studio on Orca Cloud and subscribe.</strong>In the Plugins dialog, press <span class="ui">Install plugin</span>. It opens Orca Cloud in your browser: sign in, find <span class="ui">Line Art Studio</span> and press <span class="ui">Subscribe</span> there. Back in the Plugins dialog, press <span class="ui">Refresh</span>. Line Art Studio appears in the list with <span class="ui">Subscribed</span> in the <span class="ui">Source</span> column, and OrcaSlicer downloads and installs it.
+    <figure>
+      <img src="orca-plugins-dialog-top.png" width="884" height="82" loading="lazy" alt="The top of the Plugins dialog: a search box, the Refresh and Install plugin buttons, and the Activate, Name, Plugin Version, Source and Status columns.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The top of the Plugins dialog. <span class="ui">Install plugin</span> opens Orca Cloud, where the <span class="ui">Subscribe</span> button is; <span class="ui">Refresh</span> then brings the plugin into this list. The search box filters the list.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Activate it.</strong>In the Plugins dialog, make sure Line Art Studio is <span class="ui">Activated</span>. Tick its box in the <span class="ui">Activate</span> column. An installed plugin that is inactive adds no tab and no slicing step. The arrow before the name shows its two parts, the <span class="ui">Line Art Studio</span> tab (Pages) and the <span class="ui">Line Art Studio G-code</span> slicing step (Slicing Pipeline); keep both ticked.
+    <figure>
+      <img src="orca-plugins-activated.png" width="884" height="184" loading="lazy" alt="The Plugins dialog filtered to Line-Art-Studio 1.0.0: ticked in the Activate column with Status Activated, and its two parts, Line Art Studio (Pages) and Line Art Studio G-code (Slicing Pipeline), both ticked.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>Line Art Studio activated, with both of its parts ticked. This copy was installed from a local file for the capture, so its source reads Local; a subscribed copy reads Subscribed.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Allow the background thread, once.</strong>The first time the plugin loads, OrcaSlicer asks whether it may create a thread. Choose <span class="ui">Yes</span>. The plugin computes the line in the background, so the tab stays responsive while it works. OrcaSlicer remembers the answer; you can change it later in the Plugins dialog, on the <span class="ui">Permissions</span> tab.
+    <figure>
+      <img src="orca-permission-prompt.png" width="736" height="179" alt="OrcaSlicer dialog titled Plugin permissions: Plugin Line-Art-Studio is requesting permission to create a thread, with Yes and No buttons.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The one-time permission prompt. Choose Yes.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2 id="tab">2. Where the tab is</h2>
+<p>Once activated, Line Art Studio adds its own tab to the row of tabs at the top of the OrcaSlicer window, after <span class="ui">Prepare</span>, <span class="ui">Preview</span>, <span class="ui">Device</span>, <span class="ui">Project</span> and <span class="ui">Calibration</span>. If the window is narrow and you have several plugin tabs, some of them move behind a menu button at the end of the row.</p>
+<figure>
+  <img src="orca-tab-strip.png" width="900" height="72" alt="OrcaSlicer tab row: Prepare, Preview, Device, Project, Calibration and Line Art Studio.">
+  <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The Line Art Studio tab in OrcaSlicer's tab row.</figcaption>
+</figure>
+<figure>
+  <img src="orca-tab-empty.png" width="1586" height="958" loading="lazy" alt="The Line Art Studio tab open in OrcaSlicer before a picture is chosen: settings on the left, an empty Picture card with Choose a picture, an empty printed-line area, and the Before you slice list on the right.">
+  <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The Line Art Studio tab open in OrcaSlicer, before a picture is chosen.</figcaption>
+</figure>
+
+<h2 id="first-use">3. Your first line art, step by step</h2>
+<p>This walk-through makes a 150 mm square portrait in two filaments: a white base and a black line, on a Bambu Lab X1 Carbon with a 0.4 mm nozzle.</p>
+<ol class="steps">
+  <li><strong>Choose a picture.</strong>Open the <span class="ui">Line Art Studio</span> tab and press <span class="ui">Choose a picture</span>. In the <span class="ui">Picture</span> card, drag the picture to move it and scroll to zoom, or type values in <span class="ui">Zoom</span>, <span class="ui">Left / right</span> and <span class="ui">Up / down</span>. After a few seconds, or up to a minute for a detailed picture, <span class="ui">The printed line</span> shows the line that will be printed, with its length, print time, number of points and peak flow underneath.
+    <figure>
+      <img src="orca-tab-line.png" width="1586" height="958" loading="lazy" alt="The Line Art Studio tab in OrcaSlicer with a drawn portrait in the Picture card and its single-line version in The printed line card: 10.0 m, 4 min, 11,514 points, peak flow 3.4 mm³/s.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The tab with the guide's drawn test portrait: the picture, the printed line next to it, and the Before you slice list on the right.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Pick the frame and size.</strong>In <span class="ui">Frame, size and layers</span>, choose a frame: square, circle, rectangle, oval, rounded rectangle or hexagon. The picture is cropped to that shape and the line stays inside it. Square, circle and hexagon take one <span class="ui">Art size</span>; rectangle, oval and rounded rectangle take a <span class="ui">Width</span> and a <span class="ui">Height</span>. Each side must be at least 60 mm; faces need about 150 mm.
+    <figure>
+      <img src="orca-tab-circle.png" width="1586" height="958" loading="lazy" alt="The same tab with the circle frame selected: the picture and the line are both cropped to a circle.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The circle frame chosen.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Choose the filaments.</strong>In <span class="ui">Filaments</span>, set <span class="ui">Base</span> to your light filament and <span class="ui">Line</span> to your dark one. The lists show the filaments of the current project, so add the second filament in OrcaSlicer's filament list first if it is missing. Check that <span class="ui">Layer height</span> and <span class="ui">Nozzle</span> match your process and printer presets.</li>
+  <li><strong>Save the job and add the base to the plate.</strong>Press <span class="ui">Save job and add base to plate</span>. The tab saves the job and puts a base of the chosen shape on the plate, with each part already assigned to its filament. The first time, OrcaSlicer asks whether the plugin may read your picture file, then whether it may use the Python <code>open</code> event; choose <span class="ui">Yes</span> to both. OrcaSlicer then switches to the Prepare tab to show the base. Back in the Line Art Studio tab, the message above the button reads <span class="msg">Saved. The base is being added to the plate; slice it when it appears.</span> and the save and plate items in <span class="ui">Before you slice</span> are green.
+    <figure>
+      <img src="orca-tab-saved.png" width="1586" height="958" loading="lazy" alt="The tab after saving: every item in Before you slice is checked and the save message is shown above the button.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The tab after saving, with the slicing step from step 5 already selected: every check in Before you slice has passed.</figcaption>
+    </figure>
+    <figure>
+      <img src="orca-prepare-base.png" width="1600" height="960" loading="lazy" alt="OrcaSlicer Prepare tab with a Bambu Lab X1 Carbon, two PLA Basic filaments, and the square Line Art Studio base on a SuperTack plate next to the prime tower.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The Prepare tab with the 150 mm square base on the plate. The top of the base is the line's layer, in filament 2.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Select the slicing step (once).</strong>The picture is drawn when you slice. In the Prepare tab's process settings, open <span class="ui">Others</span>, find <span class="ui">Slicing Pipeline Plugin</span>, press <span class="ui">Add plugin</span> and choose <span class="ui">Line Art Studio G-code</span>. Save the process preset to keep it. Prints that are not the Line Art Studio base are left as they are, so the setting can stay on.
+    <figure class="narrow">
+      <img src="orca-plugin-picker.png" width="397" height="200" loading="lazy" alt="OrcaSlicer dialog Select slicing-pipeline Plugin with Line Art Studio G-code - Line-Art-Studio chosen in the list, and OK and Cancel buttons.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span><span class="ui">Add plugin</span> opens this list. Choose <span class="ui">Line Art Studio G-code</span> and press OK.</figcaption>
+    </figure>
+    <figure class="narrow">
+      <img src="orca-process-others.png" width="390" height="335" loading="lazy" alt="The process settings' Others page: Slicing Pipeline Plugin with the Add plugin button and Line Art Studio G-code listed under it.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The process preset's <span class="ui">Others</span> page with the slicing step added. The orange arrow marks the unsaved change; save the preset with the disk icon next to its name.</figcaption>
+    </figure>
+  </li>
+  <li><strong>Slice.</strong>Press <span class="ui">Slice plate</span>. The slicing step finds the top layers of the base and replaces them with the line. Back in the Line Art Studio tab, press <span class="ui">Check last slice</span>: the <span class="ui">Last slice</span> card reports what the step did, for example <span class="msg">Replaced the top 1 layer(s) with a 10.0 m line from Z1, 4 min.</span></li>
+  <li><strong>Check the preview, then print.</strong>On a Bambu Lab printer the <span class="ui">Preview</span> tab shows the line on the top layer. Then print as usual with <span class="ui">Print plate</span>.
+    <figure>
+      <img src="orca-preview-line.png" width="1600" height="960" loading="lazy" alt="OrcaSlicer Preview tab: the square base seen from above with the portrait drawn as one dense black line on the top layer, the G-code list showing LINE_ART_STUDIO_END.">
+      <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The Preview tab with this job's finished G-code: the line on the top layer, ending at the plugin's <code>LINE_ART_STUDIO_END</code> marker.</figcaption>
+    </figure>
+  </li>
+</ol>
+
+<h2 id="settings">4. The key settings</h2>
+<p>Version 1.0.0 has one style, <span class="ui">TSP line</span>: one line that never crosses itself, whose tone comes from how tightly it packs. Changing a setting that affects the line recomputes it after a short pause.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>Setting</th><th>What it does</th><th>Default and range</th></tr></thead>
+  <tbody>
+    <tr><td>Art size (Width, Height)</td><td>The size of the art on the plate. Faces need about 150 mm; below 100 mm only bold shapes read well.</td><td>150 mm; at least 60 mm per side</td></tr>
+    <tr><td>Frame</td><td>Square, circle, rectangle, oval, rounded rectangle or hexagon. The picture, the line and the base all follow it.</td><td>Square</td></tr>
+    <tr><td>Layer height, Nozzle</td><td>Must match the process and printer presets, or the slice stops with a message. The Before you slice list checks this for you.</td><td>Taken from your presets</td></tr>
+    <tr><td>Base layers</td><td>How thick the base is, in layers. The bar under the fields shows base, line and total height.</td><td>4</td></tr>
+    <tr><td>Line layers</td><td>How many layers the line is stacked. More layers give a raised line.</td><td>1; 1 to 10</td></tr>
+    <tr><td>Line width</td><td>The width of the printed line. Changing the nozzle sets it to 1.05 times the nozzle.</td><td>0.42 mm on a 0.4 mm nozzle; 0.5 to 1.5 times the nozzle</td></tr>
+    <tr><td>Detail spacing</td><td>How close two points of the line may be, as a multiple of the line width. Lower values give more detail and a longer line.</td><td>1.3; 1.3 to 4.0</td></tr>
+    <tr><td>Print speed</td><td>The speed of the line. If your filament's volumetric limit is lower, the tab says <em>The filament's flow limit holds the speed at ... mm/s.</em></td><td>40 mm/s</td></tr>
+    <tr><td>Automatic tone</td><td>Stretches the picture across its light-to-dark range and sharpens it. Leave it on for most photos.</td><td>On</td></tr>
+    <tr><td>Contrast</td><td>Spreads the tones apart around mid-gray. Raise it for a flat or pale picture.</td><td>1.25; 0.1 to 4.0</td></tr>
+    <tr><td>Gamma</td><td>Above 1 darkens the middle tones (more line); below 1 lightens them.</td><td>1.0; 0.1 to 4.0</td></tr>
+    <tr><td>Light line on a dark base</td><td>For a light line filament on a dark base: the picture is drawn as a negative so it still reads the right way round.</td><td>Off</td></tr>
+    <tr><td>Filaments: Base, Line</td><td>Which project filament prints the base and which prints the line. Different filaments give a filament change at the first line layer.</td><td>Filament 1 for both</td></tr>
+    <tr><td>Color change</td><td>Shown only when Base and Line are the same filament. <span class="ui">Pause first</span> pauses the print before the line so you can swap the filament by hand; <span class="ui">None</span> prints straight on.</td><td>Pause first</td></tr>
+  </tbody>
+</table>
+</div>
+<figure class="narrow">
+  <img src="orca-settings-frame-tone.png" width="380" height="910" loading="lazy" alt="The left column of the tab: Style, Filaments, Frame, size and layers, and the Tone card.">
+  <figcaption><span class="source real">OrcaSlicer 2.5.2</span>Filaments, frame, size, layers and the start of the tone card.</figcaption>
+</figure>
+<figure class="narrow">
+  <img src="orca-settings-detail.png" width="380" height="910" loading="lazy" alt="The left column with the Line width, detail and speed card opened: Line width 0.42 mm, Detail spacing 1.3, Print speed 40 mm/s.">
+  <figcaption><span class="source real">OrcaSlicer 2.5.2</span>The folded <span class="ui">Line width, detail and speed</span> card, opened.</figcaption>
+</figure>
+
+<h2 id="printing">5. Printing tips for an X1 Carbon with AMS</h2>
+<p>These tips assume a Bambu Lab X1 Carbon with AMS, a Cool Plate SuperTack and the prime tower on.</p>
+<ul>
+  <li><strong>Use two filaments.</strong> Load the base filament (for example white PLA) and the line filament (for example black PLA) in the AMS, add both to the project, and choose them as <span class="ui">Base</span> and <span class="ui">Line</span>. The AMS changes filament once, at the first line layer.</li>
+  <li><strong>Pick a strong color contrast.</strong> The densest areas are only about half covered by the line, so dark areas read as dense texture, not solid black. White and black work best; similar colors wash the picture out.</li>
+  <li><strong>Go big for faces.</strong> About 150 mm reads well for a face. Below 100 mm only bold shapes come through.</li>
+  <li><strong>Keep the prime tower on.</strong> It primes the line filament after the change, so the line starts cleanly. Leave room for it; the base must stay inside the printable area.</li>
+  <li><strong>Use the Cool Plate SuperTack plate type</strong> in OrcaSlicer when that is the plate on the printer, so the bed temperature matches.</li>
+  <li><strong>Trust the preview.</strong> On a Bambu Lab printer the Preview tab shows the finished line, as in the picture above. If it shows a plain top layer, see <a href="#trouble">Troubleshooting</a>.</li>
+</ul>
+
+<h2 id="trouble">6. Troubleshooting</h2>
+<p>Slice results appear in the tab's <span class="ui">Last slice</span> card (press <span class="ui">Check last slice</span>). The messages below are the plugin's own wording.</p>
+<dl class="trouble">
+  <dt>The slice says it is not the Line Art Studio base</dt>
+  <dd><span class="msg">Not the Line Art Studio base: top layer is ... x ... mm, expected ... x ... mm. G-code left as it is.</span> or <span class="msg">Not the Line Art Studio base: the top layer does not have the shape of the expected ... mm base. G-code left as it is.</span> The base on the plate no longer matches the saved job: the size or frame changed after the base was added, or the base was rotated or scaled on the plate. Delete the base from the plate and press <span class="ui">Save job and add base to plate</span> again. When the tab itself notices this it says <span class="msg">Saved, but the base on the plate has the old size or shape. Delete it from the plate and press the button again.</span></dd>
+
+  <dt>Layer height or nozzle mismatch</dt>
+  <dd><span class="msg">Line Art Studio: The job uses a 0.2 mm layer height but this slice uses 0.16 mm. Change the process preset's layer height, or the job's, and slice again.</span> <span class="msg">Line Art Studio: The job is for a 0.4 mm nozzle but the printer preset uses 0.6 mm.</span> Make the tab's <span class="ui">Layer height</span> and <span class="ui">Nozzle</span> match your presets, save the job again and slice.</dd>
+
+  <dt>The wrong filament is on the line layer</dt>
+  <dd><span class="msg">Line Art Studio: The art layers use filament 1, but the job asks for filament 2. Delete the base from the plate, press the save button again, and slice.</span> The base's parts were reassigned on the plate, or the filament list changed. Follow the message. If the tab says <span class="msg">This project has 1 filament(s). Add more in the filament list first.</span>, add the second filament to the project.</dd>
+
+  <dt>The line is not in the preview</dt>
+  <dd>Check these in order: the slicing step <span class="ui">Line Art Studio G-code</span> is selected in the process preset (the tab's list shows <span class="ui">Select the slicing step</span> if not); the job was saved after your last change (<span class="ui">Save the job</span> in the list; the slice uses the last saved job, not what is on the page); and the <span class="ui">Last slice</span> card does not say <span class="msg">No saved job; G-code left as it is.</span> On printers other than Bambu Lab, the slicer preview shows the plain base; the line is still in the exported file.</dd>
+
+  <dt>The picture is too light</dt>
+  <dd><span class="msg">The picture is too light to draw. Raise the contrast, or turn Invert off.</span> Turn on <span class="ui">Automatic tone</span>, raise <span class="ui">Contrast</span>, or set <span class="ui">Gamma</span> above 1. If <span class="ui">Light line on a dark base</span> is on but your line filament is the dark one, turn it off; the list shows <span class="ui">Turn off Light line on a dark base</span> in that case.</dd>
+
+  <dt>You answered No to the thread permission</dt>
+  <dd>The plugin still works: it computes the line without a background thread instead. It is slower in use, because OrcaSlicer waits while each line is computed. To allow it later, open the Plugins dialog, select Line Art Studio and turn on <span class="ui">Threading</span> on the <span class="ui">Permissions</span> tab.</dd>
+</dl>
+
+<footer>
+  <p>Line Art Studio 1.0.0 for OrcaSlicer 2.5. Free and open source, GPL-3.0-or-later. Source: <a href="https://github.com/barismert98/orcaslicer-line-art-studio">github.com/barismert98/orcaslicer-line-art-studio</a>.</p>
+</footer>
+</main>
+</body>
+</html>
